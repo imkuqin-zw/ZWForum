@@ -88,7 +88,7 @@ class AuthController extends Controller
         $user = $this->user->create($data);
         Auth::login($user);
 
-        return redirect('/');
+        return redirect()->route('user.show');
     }
 
     /**
