@@ -22836,6 +22836,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
+      domain: window.Domain,
       alertShow: false,
       deleteId: null,
       items: [],
@@ -47825,7 +47826,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           "border-radius": "50%"
         },
         attrs: {
-          "src": 'http://zwforum.app/uploads/portraits/' + item[field.name]
+          "src": _vm.domain + 'uploads/portraits/' + item[field.name]
         }
       })] : [_vm._v("\n                                " + _vm._s(item[field.name]) + "\n                            ")]], 2)
     }), _vm._v(" "), _c('td', [_c('ul', {

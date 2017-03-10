@@ -18,7 +18,7 @@
                         <tr v-for="item in items" >
                             <td v-for="field in tableFields" >
                                 <template v-if="field.trans === '头像' " >
-                                    <img :src="'http://zwforum.app/uploads/portraits/' + item[field.name]" style="width: 40px;height: 40px;border-radius: 50%;">
+                                    <img :src="domain + 'uploads/portraits/' + item[field.name]" style="width: 40px;height: 40px;border-radius: 50%;">
                                 </template>
                                 <template v-else >
                                     {{ item[field.name] }}
@@ -117,6 +117,7 @@ export default{
   },
   data() {
     return{
+      domain: window.Domain,
       alertShow:false,
       deleteId:null,
       items: [],
