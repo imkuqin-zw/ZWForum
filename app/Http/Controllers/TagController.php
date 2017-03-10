@@ -32,6 +32,6 @@ class TagController extends Controller
             default : $topics = $this->tag->getPageOrderByDefault($id);break;
         }
         $tag = $id;
-        return view('Tag.show',compact('topics','filter','tag'));
+        return view('tag.show',compact('topics','filter','tag'));
     }
 }

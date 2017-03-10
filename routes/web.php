@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/test',function (){
-   return view('auth.github')->with(['github_id'=>123,'name'=>'456']);
-});
-
 Auth::routes();
 Route::get('auth/github', 'Auth\AuthController@redirectToProvider')->name('auth.github');
 Route::get('auth/github/callback', 'Auth\AuthController@handleProviderCallback');

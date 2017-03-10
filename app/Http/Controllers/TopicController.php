@@ -54,7 +54,7 @@ class TopicController extends Controller
         if($filter == 'default' && (!$request->get('page') || $request->get('page') == 1))
             $topTopics = $this->topic->getTopTopics();
 
-        return view('Topic.index',compact('topics','topTopics','filter'));
+        return view('topic.index',compact('topics','topTopics','filter'));
     }
 
     /**
