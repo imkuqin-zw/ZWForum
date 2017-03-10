@@ -61,7 +61,7 @@ class AuthController extends Controller
         $userInstance = User::where('github_id',$user->id)->orWhere('email',$user->email)->firstOrFail();
         Auth::login($userInstance);
 
-        return redirect()->route('user.show');
+        return redirect('/');
 
     }
 
@@ -88,7 +88,7 @@ class AuthController extends Controller
         $user = $this->user->create($data);
         Auth::login($user);
 
-        return redirect()->route('user.show');
+        return redirect('/');
     }
 
     /**
@@ -128,6 +128,6 @@ class AuthController extends Controller
         $this->user->update($user->id,$data['github_id']);
         Auth::login($user);
 
-        return redirect()->route('user.show');
+        return redirect('/');
     }
 }
