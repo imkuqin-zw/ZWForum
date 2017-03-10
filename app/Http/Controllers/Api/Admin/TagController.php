@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\TagForm;
 use App\Http\Requests\UpdateTagForm;
 use App\Repositories\TagRepository;
-use App\Transformers\Admin\tagTransformer;
+use App\Transformers\Admin\TagTransformer;
 use Illuminate\Support\Facades\Auth;
 
 class TagController extends ApiController
@@ -39,7 +39,7 @@ class TagController extends ApiController
         if(!Auth::user()->can('list-tag'))
             abort(403);
         $tags = $this->tag->page(20);
-        return $this->respondWithPaginator($tags, new tagTransformer());
+        return $this->respondWithPaginator($tags, new TagTransformer());
     }
 
     /**
@@ -68,7 +68,7 @@ class TagController extends ApiController
     public function show($id)
     {
         $tags = $this->tag->getById($id);
-        return $this->respondWithItem($tags, new tagTransformer());
+        return $this->respondWithItem($tags, new TagTransformer());
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +20,9 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:api','namespace' => 'Api
     Route::resource('cate','CategoryController');
     Route::resource('topic','TopicController');
     Route::resource('reply','ReplyController');
+    Route::resource('role','RoleController');
     Route::post('user/roles','UserController@attachUserRole')->name('user.attach');
     Route::get('perms','RoleController@showPermissions')->name('permission.index');
-    Route::resource('role','RoleController');
     Route::post('role/perms','RoleController@attachRolePerms')->name('role.attach');
 
 });

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Repositories\ReplyRepository;
 use Illuminate\Support\Facades\Auth;
 
-class replyController extends ApiController
+class ReplyController extends ApiController
 {
 
     /**
