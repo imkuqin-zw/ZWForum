@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\ApiController;
 use App\Model\Permission;
 //use App\Model\Role;
+use App\Model\Role;
 use App\Repositories\RoleRepository;
 //use App\Transformers\Admin\PermsTransformer;
 use App\Transformers\Admin\RoleTransformer;
@@ -107,7 +108,9 @@ class RoleController extends ApiController
     {
         if(!Auth::user()->can('delete-role'))
             abort(403);
-        $this->role->destroy($id);
+        $role = Role::where('id',$id);
+        $role->delete();
+        //$this->role->destroy($id);
         return $this->noContent();
     }
 
