@@ -8,9 +8,8 @@
 require('./bootstrap');
 import { sync } from 'vuex-router-sync'
 import NProgress from 'vue-nprogress'
-// import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-default/index.css'
-import VeeValidate from 'vee-validate';
+import VeeValidate, { Validator } from 'vee-validate';
+import messages from 'vee-validate/dist/locale/zh_CN';
 
 import App from './App.vue'
 import router from './router'
@@ -20,8 +19,20 @@ import 'admin-lte/plugins/slimScroll/jquery.slimscroll.min'
 import 'admin-lte/dist/js/app.min.js'
 
 Vue.use(NProgress)
-Vue.use(VeeValidate)
-// Vue.use(ElementUI)
+
+Validator.updateDictionary({
+  zh_CN: {
+    messages
+  }
+});
+const config = {
+ // errorBagName: 'errors', // change if property conflicts.
+ // delay: 0,
+  locale: 'zh_CN',
+  messages: null,
+  strict: true
+};
+Vue.use(VeeValidate,config);
 
 
 sync(store, router)

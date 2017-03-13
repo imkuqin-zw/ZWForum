@@ -32,7 +32,7 @@
                         <div class="form-group" :class="{ 'has-error': errors.has('password_confirmation') }" >
                             <label for="name"  class="col-sm-2 control-label" >确认密码</label>
                             <div class="col-sm-9 col-md-6">
-                                <input class="form-control" id="password_confirmation" name="password_confirmation" v-model='formData.password_confirmation' v-validate:password_confirmation.initial="'confirmed:password'"  type="password" placeholder="">
+                                <input class="form-control" id="password_confirmation" name="password_confirmation" v-model='formData.password_confirmation' v-validate:password_confirmation.initial="'required:|confirmed:password'"  type="password" placeholder="">
                                 <span v-show="errors.has('password_confirmation')" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                                 <span v-show="errors.has('password_confirmation')" class="red-color help-block">{{ errors.first('password_confirmation') }}</span>
                             </div>
