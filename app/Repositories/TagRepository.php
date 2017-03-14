@@ -20,7 +20,7 @@ class TagRepository extends BaseRepository
 
     public function getPageOrderByDefault($id, $number = 20,$where = null){
         $tag = $this->getById($id);
-        $topics = $tag->topics()->where('is_top','no')
+        $topics = $tag->topics()
             ->where('is_blocked','no')
             ->orderBy('reply_at','desc')
             ->orderBy('updated_at', 'desc')
@@ -35,7 +35,6 @@ class TagRepository extends BaseRepository
         $tag = $this->getById($id);
         $topics = $tag->topics()->where('is_blocked','no')
             ->orderBy('updated_at', 'desc')
-            ->where('is_top','no')
             ->where('is_excellent', 'yes')
             ->whereHas('category',function($q){
                 $q->where('is_blocked','no');
@@ -49,7 +48,6 @@ class TagRepository extends BaseRepository
         $tag = $this->getById($id);
         $topics = $tag->topics()->orderBy('vote_count', 'desc')
             ->where('is_blocked','no')
-            ->where('is_top','no')
             ->whereHas('category',function($q){
                 $q->where('is_blocked','no');
             })
@@ -62,7 +60,6 @@ class TagRepository extends BaseRepository
         $tag = $this->getById($id);
         $topics = $tag->topics()->orderBy('created_at', 'desc')
             ->where('is_blocked','no')
-            ->where('is_top','no')
             ->whereHas('category',function($q){
                 $q->where('is_blocked','no');
             })
@@ -75,7 +72,6 @@ class TagRepository extends BaseRepository
         $tag = $this->getById($id);
         $topics = $tag->topics()->orderBy('updated_at', 'desc')
             ->where('is_blocked','no')
-            ->where('is_top','no')
             ->whereHas('category',function($q){
                 $q->where('is_blocked','no');
             })
@@ -85,4 +81,13 @@ class TagRepository extends BaseRepository
         return $topics;
     }
 
+    /**
+     * 按条件获得标签
+     *
+     * @param $where
+     * @return mixed
+     */
+    public function getTag($where){
+        return $this->model->where($where)->get();
+    }
 }

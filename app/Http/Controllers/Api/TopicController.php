@@ -32,77 +32,48 @@ class topicController extends ApiController
     }
 
     /**
-     * Display a listing of the resource order by time.
-     *
-     * @param int $number
+     * Display a listing of the resource.
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function getNewTopic($number=10)
+    public function index(Request $request)
     {
-        $topics = $this->topic->page($number);
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
-    }
+        $filter = ($request->get('filter'))? :'default';
+        $number = ($request->get('num'))? :10;
+        switch ($filter){
+            case "default": $topics = $this->topic->getPageOrderByDefault($number);break;
+            case "excellent": $topics = $this->topic->getPageWithExcellent($number);break;
+            case "vote": $topics = $this->topic->getPageOrderByVote($number);break;
+            case "noreply": $topics = $this->topic->getPageWithNoreply($number);break;
+            case "recent": $topics = $this->topic->getPageOrderByNew($number);break;
+            default : $topics = $this->topic->getPageOrderByDefault($number);break;
+        }
 
-    /**
-     * Display a listing of the resource order by click count.
-     *
-     * @param int $number
-     * @return \Illuminate\Http\Response
-     */
-    public function getHotTopic($number=10)
-    {
-        $topics = $this->topic->page($number,null,'desc','view_count');
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
-    }
-
-    /**
-     * Display a listing of the resource order by vote count.
-     *
-     * @param int $number
-     * @return \Illuminate\Http\Response
-     */
-    public function getTopicOrderByVote($number=10)
-    {
-        $topics = $this->topic->page($number, $sortColumn = 'vote_count');
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
-    }
-
-    /**
-     * Display a listing of the resource order by reply count.
-     *
-     * @param int $number
-     * @return \Illuminate\Http\Response
-     */
-    public function getTopicOrderByReply($number=10)
-    {
-        $topics = $this->topic->page($number, $sortColumn = 'reply_count');
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
+        return $this->respondWithPaginator($topics, new TopicListTransformer());
     }
 
     /**
      * Display a listing of the resource with the specified category.
      *
-     * @param int $id
-     * @param int $number
+     * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function getTopicByCate($id,$number = 10)
+    public function getTopicByCate(Request $request,$id)
     {
-        $topics = $this->topic->getPageByCate($id,$number);
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
-    }
+        $filter = ($request->get('filter'))? :'default';
+        $number = ($request->get('num'))? :10;
+        $where['category_id'] = $id;
+        switch ($filter){
+            case "default": $topics = $this->topic->getPageOrderByDefault($number,$where);break;
+            case "excellent": $topics = $this->topic->getPageWithExcellent($number,$where);break;
+            case "vote": $topics = $this->topic->getPageOrderByVote($number,$where);break;
+            case "noreply": $topics = $this->topic->getPageWithNoreply($number,$where);break;
+            case "recent": $topics = $this->topic->getPageOrderByNew($number,$where);break;
+            default : $topics = $this->topic->getPageOrderByDefault($number,$where);break;
+        }
 
-    /**
-     * Display a listing of the resource with the specified tag.
-     *
-     * @param int $id
-     * @param int $number
-     * @return \Illuminate\Http\Response
-     */
-    public function getTopicByTag($id,$number = 10)
-    {
-        $topics = $this->topic->getPageByTag($id,$number);
-        return $this->respondWithPaginator($topics, new ListTopicTransformer());
+        return $this->respondWithPaginator($topics, new TopicListTransformer());
     }
 
     /**
@@ -174,27 +145,27 @@ class topicController extends ApiController
         return $this->noContent();
     }
 
-    /**
-     * move the specified resource to the recycle bin.
-     *
-     * @param $id
-     * @return \Illuminate\Http\Response
-     */
-    public function softDelete($id){
-        $this->topic->softDelete($id);
-        return $this->noContent();
-    }
+//    /**
+//     * move the specified resource to the recycle bin.
+//     *
+//     * @param $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function softDelete($id){
+//        $this->topic->softDelete($id);
+//        return $this->noContent();
+//    }
 
-    /**
-     * remove the specified resource from the recycle bin.
-     *
-     * @param $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore($id){
-        $this->topic->restore($id);
-        return $this->noContent();
-    }
+//    /**
+//     * remove the specified resource from the recycle bin.
+//     *
+//     * @param $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function restore($id){
+//        $this->topic->restore($id);
+//        return $this->noContent();
+//    }
 
 
     /**
@@ -213,7 +184,7 @@ class topicController extends ApiController
             }
             $data['filename'] = $upload_status['filename'];
         } else {
-            $data['error'] = 'Error while uploading file';
+            $data['error'] = '上传错误！';
         }
         return $data;
     }

@@ -9,7 +9,7 @@
 namespace App\Transformers;
 
 
-class ListTopicTransformer extends BaseTransformer
+class TopicListTransformer extends BaseTransformer
 {
     protected $availableIncludes = [];
 
@@ -32,11 +32,11 @@ class ListTopicTransformer extends BaseTransformer
 
     public function includeUser($model)
     {
-        return $this->item($model->user, new UserTransformer());
+        return $this->item($model->user, new TopicUserTransformer());
     }
 
     public function includeCategory($model)
     {
-        return $this->item($model->category, new CategoryTransformer());
+        return $this->item($model->category, new TopicCategoryTransformer());
     }
 }

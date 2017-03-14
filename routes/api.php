@@ -29,22 +29,23 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:api','namespace' => 'Api
 
 Route::group(['namespace' => 'Api','as' => 'api.'], function () {
     Route::group(['as' => 'topic.'],function (){
-        Route::get('topic/gethotlist','TopicController@getHotTopic')->name('gethotlist');
-        Route::get('topic/getnewlist','TopicController@getNewTopic')->name('getnewlist');
-        Route::get('topic/getvotelist','TopicController@getTopicOrderByVote')->name('getvotelist');
-        Route::get('topic/getreplylist','TopicController@getTopicOrderByReply')->name('getreplylist');
+        Route::get('topic','TopicController@index')->name('topicList');
         Route::get('topic/{id}/cate','TopicController@getTopicByCate')->name('getTopicByCate');
-        Route::get('topic/{id}/tag','TopicController@getTopicByTag')->name('getTopicByTag');
+        Route::get('topic/{id}/tag','TagController@index')->name('getTopicByTag');
         Route::get('topic/{id}','TopicController@show')->name('show');
-        Route::post('topic','TopicController@store')->name('create');
+    });
+    Route::get('user/{id}/topic','UserController@getUserTopic')->name('user.getUserTopic');
+    Route::get('user/{id}/reply','UserController@getUserReply')->name('user.getUserReply');
+    Route::get('user/{id}/vote','UserController@getUserVote')->name('user.getUserVote');
+    Route::get('user/{id}/follower','UserController@getUserFollower')->name('user.getUserFollower');
+    Route::get('user/{id}','UserController@getBaseInfo')->name('user.getBaseInfo');
 
-    });
-    Route::get('user/{id}','UserController@show')->name('user.show');
-    Route::group(['as' => 'cate.'],function (){
-        Route::get('cate','CategoryController@index')->name('index');
-        Route::get('cate/gethotlist','CategoryController@gethotlist')->name('gethotlist');
-        Route::get('cate/{id}/topiclist','CategoryController@getTopicByCate')->name('getTopicByCate');
-    });
+    Route::get('cate/showlist','CategoryController@showList')->name('cate.showList');
+    Route::get('tag/showlist','TagController@showList')->name('tag.showList');
+
+    Route::get('reply/{id}','ReplyController@index')->name('reply.index');
+
+
 
 });
 
@@ -54,9 +55,17 @@ Route::group(['middleware' => 'auth:api','namespace' => 'Api','as' => 'api.'], f
         Route::post('topic', 'TopicController@store')->name('create');
         Route::put('topic/{id}/restore', 'TopicController@restore')->name('delete');
         Route::put('topic/{id}', 'TopicController@update')->name('update');
-        Route::delete('topic/{id}/softdelete', 'TopicController@softDelete')->name('delete');
+       // Route::delete('topic/{id}/softdelete', 'TopicController@softDelete')->name('delete');
         Route::delete('topic/{id}', 'TopicController@destroy')->name('destroy');
+        Route::get('tag/editlist','TagController@editList')->name('tag.editList');
+        Route::get('cate/editlist','CategoryController@editList')->name('cate.editList');
 
+        Route::put('user/{id}/portrait','UserController@updatePortrait')->name('user.updatePortrait');
+        Route::put('user/{id}/password','UserController@updatePassword')->name('user.updatePassword');
+        Route::put('user/{id}','UserController@update')->name('user.update');
+
+        Route::post('reply','ReplyController@store')->name('reply.create');
+        Route::delete('reply/{id}','ReplyController@destroy')->name('reply.delete');
     });
-    Route::put('user/{id}','UserController@update')->name('user.update');
+
 });

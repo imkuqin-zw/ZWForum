@@ -12,6 +12,7 @@ use App\Model\Reply;
 use App\Model\Topic;
 use App\Zwforum\Markdown\Markdown;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -88,4 +89,9 @@ class ReplyRepository extends BaseRepository
         return count($last_reply) && strcmp($last_reply->content, $data['content']) === 0;
     }
 
+    public function getTopicReply($id,$number = 10){
+        //
+        return $this->model->orderBy('created_at', 'desc')->where('topic_id',$id)->paginate($number);
+
+    }
 }

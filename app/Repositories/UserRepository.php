@@ -109,7 +109,7 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * get the all replies of the user.
+     * get the all collection topics of the user.
      *
      * @param $id
      * @param int $number
@@ -117,7 +117,7 @@ class UserRepository extends BaseRepository
      */
     public function getAllVotes($id,$number=20)
     {
-        $topics = DB::table('topic_user')->select('topic_id')->where('user_id',[$id])->get();
+        $topics = DB::table('、')->select('topic_id')->where('user_id',[$id])->get();
         $topicId = [];
         foreach ($topics as $topic)
             $topicId[] = $topic->topic_id;
@@ -129,7 +129,7 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * get the all replies of the user.
+     * get the all followers of the user.
      *
      * @param $id
      * @param int $number
@@ -156,6 +156,7 @@ class UserRepository extends BaseRepository
             ->whereHas('category',function($q){
                 $q->where('is_blocked','no');
             })->count();
+
     }
 
     /**

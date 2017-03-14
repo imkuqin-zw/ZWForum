@@ -32,15 +32,15 @@ class ShowTopicTransformer extends BaseTransformer
 
     public function includeUser($model)
     {
-        return $this->item($model->user, new UserTransformer());
+        return $this->item($model->user, new TopicUserTransformer());
     }
 
     public function includeCategory($model)
     {
-        return $this->item($model->category, new CategoryTransformer());
+        return $this->item($model->category, new TopicCategoryTransformer());
     }
 
     public function includeTags($model){
-        return $this->collection($model->tags, new TagTransformer());
+        return $this->collection($model->tags, new TopicTagTransformer());
     }
 }

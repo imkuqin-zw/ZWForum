@@ -2,6 +2,8 @@
 @section('title',$topic->title)
 @section('styles')
     <link rel="stylesheet" href="{{asset('css/markdown.css')}}">
+    {{--<link rel="stylesheet" href="{{asset('css/highline.css')}}">--}}
+
     <style>
 
     </style>
@@ -189,8 +191,10 @@
 <script type="text/javascript" src="{{asset('js/autosize.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/markdown.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.inline-attachment.min.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('js/highlight.pack.js')}}"></script>--}}
 <script type="text/javascript" >
   $(function () {
+//    hljs.initHighlightingOnLoad();
     autosize($('textarea'));
     $('textarea').textcomplete([
       { // emoji strategy

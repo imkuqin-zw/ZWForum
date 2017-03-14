@@ -39,4 +39,14 @@ class CategoryRepository extends BaseRepository
     public function validateBlocked($id){
         $this->model->where('is_blocked','no')->findOrFail($id);
     }
+
+    /**
+     * 按条件返回分类
+     *
+     * @param $where
+     * @return mixed
+     */
+    public function getCategory($where){
+        return $this->model->where($where)->get();
+    }
 }

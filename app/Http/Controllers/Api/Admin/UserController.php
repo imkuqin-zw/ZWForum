@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\CreateUserForm;
+use App\Http\Requests\UpdateUserForm;
 use App\Repositories\UserRepository;
 use App\Transformers\Admin\UserListTransformer;
 use App\Transformers\Admin\UserTransformer;
@@ -91,11 +92,11 @@ class UserController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UpdateUserForm  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserForm $request, $id)
     {
         if(!Auth::user()->can('edit-user'))
             abort(403);
