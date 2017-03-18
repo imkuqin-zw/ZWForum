@@ -23,10 +23,9 @@
                             <input name="github_id" type="hidden" value="{{ $github_id }}" >
                             <input name="name" type="hidden" value="{{ $name }}" >
                             <div class="form-group">
-                                <label for="email" class="col-md-3 control-label">邮箱</label>
-
+                                <label for="email_register" class="col-md-3 control-label">邮箱</label>
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input id="email_register" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
                                 </div>
                             </div>
 
@@ -51,24 +50,29 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('auth.githuRegister') }}">
                             {{ csrf_field() }}
                             <input name="github_id" type="hidden" value="{{ $github_id }}" >
-                            <input name="name" type="hidden" value="{{ $name }}" >
                             <div class="form-group">
-                                <label for="email" class="col-md-3 control-label">邮箱</label>
+                                <label for="name_register" class="col-md-3 control-label">昵称</label>
+                                <div class="col-md-6">
+                                    <input id="name_register" type="text" class="form-control" name="name" value="{{ old('name')? :$name }}" required autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email_register" class="col-md-3 control-label">邮箱</label>
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="col-md-3 control-label">密码</label>
+                                <label for="password_register" class="col-md-3 control-label">密码</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    <input id="password_register" type="password" class="form-control" name="password" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="col-md-3 control-label">确认密码</label>
+                                <label for="password_confirmation" class="col-md-3 control-label">确认密码</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password_confirmation" required>
+                                    <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
                             </div>
 
