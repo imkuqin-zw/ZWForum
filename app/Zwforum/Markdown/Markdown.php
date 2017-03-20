@@ -26,7 +26,9 @@ class Markdown
 
     public function convertHtmlToMarkdown($html)
     {
-        return $this->htmlParser->convert($html);
+        $topic = $this->htmlParser->convert($html);
+        $topic = preg_replace("/```(.*?)```/is", "```$1```\r\n", $topic);
+        return $topic;
     }
 
     public function convertMarkdownToHtml($markdown)

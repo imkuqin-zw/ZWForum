@@ -8,9 +8,9 @@
         </a>
         <div class="media-body padding-top-sm">
             <div class="media-heading">
-                <div class="role-label text-white">
-                    <a class="label label-success role" href="#">创始人</a>
-                </div>
+                {{--<div class="role-label text-white">--}}
+                    {{--<a class="label label-success role" href="#">创始人</a>--}}
+                {{--</div>--}}
                 <span class="introduction">{{$topic->user->description}}</span>
             </div>
             <ul class="list-inline"></ul>

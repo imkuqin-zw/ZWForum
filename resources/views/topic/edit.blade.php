@@ -27,7 +27,7 @@
                 <div class="form-group">
                     <input class="form-control" autocomplete=off id="topic-title" placeholder="请填写标题" name="title" type="text" value="{{$topic->title}}" required="require">
                 </div>
-                <textarea name="content" placeholder="请使用 Markdown 格式书写 ;-)，代码片段黏贴时请注意使用高亮语法。" id="message-editable">{{$topic->content}}</textarea>
+                <textarea name="content" placeholder="请使用 Markdown 格式书写 ;-)，代码片段黏贴时请注意使用高亮语法。" id="topic-editable">{!! $topic->content  !!}</textarea>
                 <div class="form-group">
                     <input class="form-control " data-provide="typeahead"  id="topic-tags" placeholder="请填写标签" name="tags" type="text" value="" />
                 </div>
@@ -81,11 +81,12 @@
           container: "body"
         });
         var simplemde = new SimpleMDE({
+          element: document.getElementById("topic-editable"),
           spellChecker: false,
           autosave: {
             enabled: true,
-            delay: 1,
-            unique_id: "topic_content{{ isset($topic) ? $topic->id : '' }}"
+            delay: 1000,
+            unique_id: "topic_content{{ isset($topic) ? $topic->id : '' }}",
           },
           forceSync: true
         });

@@ -214,11 +214,14 @@ class TopicRepository extends BaseRepository
                     $topic = $this->model->withTrashed()->findOrFail($data['id']);
                     if (!$flag)
                         $topic->category()->increment('topic_count');
-                    $topic->tags()->sync($data['tags']);
-                    $topic->tags()->increment('topic_count');
+                    if(isset($data['tags'])){
+                        $topic->tags()->sync($data['tags']);
+                        $topic->tags()->increment('topic_count');
+                    }
                 }else{
                     $topic = $topic->save($data);
-                    $topic->tags()->sync($data['tags']);
+                    if($data['tags'])
+                        $topic->tags()->sync($data['tags']);
                 }
 
             }catch (Exception $e){

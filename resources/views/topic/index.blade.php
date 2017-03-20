@@ -36,7 +36,7 @@
                                     </a>
                                     <div class="avatar pull-left">
                                         <a href="{{route('user.show',$topTopic->user->id)}}" title="{{$topTopic->user->name}}">
-                                            <img class="media-object img-thumbnail avatar avatar-middle" alt="{{$topTopic->user->name}}" src="{{asset('uploads/portraits').'/'.($topTopic->user->portrait_min)? : 'profile_min.png'}}" />
+                                            <img class="media-object img-thumbnail avatar avatar-middle" alt="{{$topTopic->user->name}}" src="{{ asset('uploads/portraits').'/' }}{{ ($topTopic->user->portrait_min)? : 'profile_min.png' }}" />
                                         </a>
                                     </div>
                                     <div class="infos">

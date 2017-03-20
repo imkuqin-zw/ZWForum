@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTopicForm;
 use App\Http\Requests\VoteForm;
+use App\Model\Followers;
 use App\Model\Topic;
 use App\Repositories\TopicRepository;
 use App\User;
@@ -106,16 +107,27 @@ class TopicController extends Controller
         $topic = $this->topic->getById($id);
         $topic->increment('view_count');
         $tags = $topic->tags->toArray();
-
+        $user = '';
         $replies = $topic->replies;
-        foreach ($replies as $reply)
-            $user[] = $reply->user->name;
-        if($temp = User::find(1))
-            $user[] = $temp->name;
-        $user = array_unique($user);
-        $user = \GuzzleHttp\json_encode($user);
+        $isVoted = null;
+        if(Auth::check()) {
+            foreach ($replies as $reply)
+                $user[] = $reply->user->name;
+            //获取管理员
+            $admins = User::where('is_admin', 'yes')->where('is_banned', 'no')->get();
+            foreach ($admins as $admin)
+                $user[] = $admin->name;
+            //获取管理用户
+            $followers = Followers::where('user_id', Auth::id())->select('follower_id')->get()->toArray();
+            $followers = User::whereIn('id', $followers)->where('is_banned', 'no')->select('name')->get();
+            foreach ($followers as $follower)
+                $user[] = $follower->name;
+            //去重并格式化@用户数组
+            $user = array_unique($user);
+            $user = \GuzzleHttp\json_encode($user);
 
-        $isVoted = Auth::check()?$this->topic->isVoted($id):null;
+            $isVoted = $this->topic->isVoted($id);
+        }
 
         return view('topic.show',compact('topic','tags','replies','user','isVoted'));
     }

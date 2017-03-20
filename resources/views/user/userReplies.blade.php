@@ -2,6 +2,8 @@
 @section('title',$user->name.'-回复列表')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/markdown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
+
 @endsection
 @section('content')
     <div class="container border-color main-container">
@@ -50,6 +52,7 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src="{{asset('js/prism.js')}}"></script>
     <script>
       $(function () {
         $("[data-toggle='tooltip']").tooltip({
