@@ -23,7 +23,7 @@ class TopicListTransformer extends BaseTransformer
             "reply_count" => $model->reply_count,
             "vote_count" => $model->vote_count,
             "view_count" => $model->view_count,
-            "time" => $model->created_at->toDataTimeString(),
+            "time" => $model->created_at->toDateTimeString(),
             'links' => [
                 'details_topic' => route('api.topic.show', $model->id),
             ],

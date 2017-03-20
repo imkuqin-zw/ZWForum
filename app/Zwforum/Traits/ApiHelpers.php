@@ -110,7 +110,6 @@ trait ApiHelpers
     protected function respondWithCollection($collection, $callback)
     {
         $resource = new Collection($collection, $callback);
-
         $rootScope = $this->fractal->createData($resource);
 
         return $this->respondWithArray($rootScope->toArray());

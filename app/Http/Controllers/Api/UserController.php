@@ -17,6 +17,7 @@ class UserController extends ApiController
 
     public function __construct(UserRepository $user)
     {
+        parent::__construct();
         $this->user = $user;
     }
 
@@ -43,7 +44,7 @@ class UserController extends ApiController
     public function getUserTopic(Request $request, $id){
         $number = ($request->get('num'))? :20;
         $topics = $this->user->getAllTopics($id,$number);
-        return $this->respondWithCollection($topics,new TopicListTransformer());
+        return $this->respondWithPaginator($topics,new TopicListTransformer());
     }
 
     /**

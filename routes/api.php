@@ -29,10 +29,10 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:api','namespace' => 'Api
 
 Route::group(['namespace' => 'Api','as' => 'api.'], function () {
     Route::group(['as' => 'topic.'],function (){
-        Route::get('topic','TopicController@index')->name('topicList');
         Route::get('topic/{id}/cate','TopicController@getTopicByCate')->name('getTopicByCate');
-        Route::get('topic/{id}/tag','TagController@index')->name('getTopicByTag');
+        Route::get('topic/{id}/tag','TagController@showTopicList')->name('getTopicByTag');
         Route::get('topic/{id}','TopicController@show')->name('show');
+        Route::get('topic','TopicController@index')->name('topicList');
     });
     Route::get('user/{id}/topic','UserController@getUserTopic')->name('user.getUserTopic');
     Route::get('user/{id}/reply','UserController@getUserReply')->name('user.getUserReply');

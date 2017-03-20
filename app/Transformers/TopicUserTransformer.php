@@ -20,7 +20,10 @@ class TopicUserTransformer extends BaseTransformer
             'portrait_min' => $model->portrait_min,
             'name' => $model->name,
             'link' =>[
-                'details_user' => route('api.user.show',$model->id),
+                'base_info' => route('api.user.getBaseInfo',$model->id),
+                'user_topic_list' => route('api.user.getUserTopic',$model->id),
+                'user_Vote_list' => route('api.user.getUserVote',$model->id),
+                'base_follower_list' => route('api.user.getUserFollower',$model->id),
             ]
         ];
     }

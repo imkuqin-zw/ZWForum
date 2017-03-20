@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTopicForm;
 use App\Repositories\TopicRepository;
 use App\Transformers\ShowTopicTransformer;
 use App\Transformers\ListTopicTransformer;
+use App\Transformers\TopicListTransformer;
 use App\Zwforum\Image\ImageUpload;
 use App\Zwforum\Markdown\Markdown;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class topicController extends ApiController
     public function index(Request $request)
     {
         $filter = ($request->get('filter'))? :'default';
-        $number = ($request->get('num'))? :10;
+        $number = ($request->get('num'))? :20;
         switch ($filter){
             case "default": $topics = $this->topic->getPageOrderByDefault($number);break;
             case "excellent": $topics = $this->topic->getPageWithExcellent($number);break;
@@ -62,7 +63,7 @@ class topicController extends ApiController
     public function getTopicByCate(Request $request,$id)
     {
         $filter = ($request->get('filter'))? :'default';
-        $number = ($request->get('num'))? :10;
+        $number = ($request->get('num'))? :20;
         $where['category_id'] = $id;
         switch ($filter){
             case "default": $topics = $this->topic->getPageOrderByDefault($number,$where);break;
