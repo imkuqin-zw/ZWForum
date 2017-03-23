@@ -280,22 +280,28 @@ class TopicRepository extends BaseRepository
         return $result;
     }
 
-    public function getPageOrderByDefault($number = 20,$where = null){
+    public function getPageOrderByDefault($number = 20,$where = null,$whereNotIn = null){
         $topics = $this->model->where('is_blocked','no')
             ->orderBy('reply_at','desc')
             ->orderBy('updated_at', 'desc');
         if($where)
-            $topics = $topics->where($where)
-                ->where('is_blocked','no')
-                ->whereHas('category',function($q){
-                    $q->where('is_blocked','no');
-                })
-                ->paginate($number);
-        else
-            $topics = $topics->whereHas('category',function($q){
-                    $q->where('is_blocked','no');
-                })->where('is_blocked','no')
-                ->paginate($number);
+            $topics = $topics->where($where);
+//                ->where('is_blocked','no')
+//                ->whereHas('category',function($q){
+//                    $q->where('is_blocked','no');
+//                })
+//                ->paginate($number);
+        if($whereNotIn)
+            $topics = $topics->whereNotIn('id',$whereNotIn);
+//                ->where('is_blocked','no')
+//                ->whereHas('category',function($q){
+//                    $q->where('is_blocked','no');
+//                })
+//                ->paginate($number);
+        $topics = $topics->whereHas('category',function($q){
+                $q->where('is_blocked','no');
+            })->where('is_blocked','no')
+            ->paginate($number);
 
         return $topics;
     }

@@ -43,17 +43,21 @@ class TopicController extends Controller
     public function index(Request $request)
     {
         $filter = ($request->get('filter'))? :'default';
+        $topTopics = [];
+        $topicTopId = [];
+        if($filter == 'default' && (!$request->get('page') || $request->get('page') == 1)) {
+            $topTopics = $this->topic->getTopTopics();
+            foreach ($topTopics as $value)
+                $topicTopId[] = $value->id;
+        }
         switch ($filter){
-            case "default": $topics = $this->topic->getPageOrderByDefault();break;
+            case "default": $topics = $this->topic->getPageOrderByDefault(20,null,$topicTopId);break;
             case "excellent": $topics = $this->topic->getPageWithExcellent();break;
             case "vote": $topics = $this->topic->getPageOrderByVote();break;
             case "noreply": $topics = $this->topic->getPageWithNoreply();break;
             case "recent": $topics = $this->topic->getPageOrderByNew();break;
             default : $topics = $this->topic->getPageOrderByDefault();break;
         }
-        $topTopics = [];
-        if($filter == 'default' && (!$request->get('page') || $request->get('page') == 1))
-            $topTopics = $this->topic->getTopTopics();
 
         return view('topic.index',compact('topics','topTopics','filter'));
     }
@@ -85,8 +89,7 @@ class TopicController extends Controller
         if($this->topic->isDuplicate($topicData)){
             return redirect()->back()->withErrors('请不要发布重复内容！');
         }
-        $markdown = new Markdown();
-        $topicData['content'] = $markdown->convertMarkdownToHtml($topicData['content']);
+        $topicData['content'] = app(Markdown::class)->convertMarkdownToHtml($topicData['content']);
         $topicData['user_id'] = Auth::user()->id;
         try{
             $id = $this->topic->createTopic($topicData);
@@ -143,8 +146,7 @@ class TopicController extends Controller
         $topic = $this->topic->getById($id);
         if($topic->user_id != Auth::user()->id)
             abort(404);
-        $markdown = new Markdown();
-        $topic->content = $markdown->convertHtmlToMarkdown($topic->content);
+        $topic->content = app(Markdown::class)->convertHtmlToMarkdown($topic->content);
         $tagsArray = [];
         foreach ($topic->tags as $tag){
             $tagsArray[] = \GuzzleHttp\json_encode(['name'=>$tag->name, 'id'=>$tag->id]);

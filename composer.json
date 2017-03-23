@@ -30,9 +30,6 @@
         "psr-4": {
             "App\\": "app/"
         },
-        "files":[
-            "app/Zwforum/helpers.php"
-        ]
     },
     "autoload-dev": {
         "psr-4": {
