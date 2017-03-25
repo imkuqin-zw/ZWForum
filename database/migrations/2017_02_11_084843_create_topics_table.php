@@ -26,7 +26,7 @@ class CreateTopicsTable extends Migration
             $table->enum('is_blocked', ['yes',  'no'])->default('no')->index()->comment('是否禁止');
             $table->unsignedInteger('category_id')->default(0)->index()->comment('分类id');
             $table->unsignedInteger('user_id')->index()->comment('用户id');
-            $table->timestamp('reply_at')->comment('最新评论的时间');
+            $table->timestamp('reply_at')->nullable()->comment('最新评论的时间');
             $table->softDeletes();
             $table->timestamps();
 

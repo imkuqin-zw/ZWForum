@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReplyMention;
 use App\Http\Requests\ReplyForm;
 use App\Repositories\ReplyRepository;
 use App\Zwforum\Traits\ReplyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 
 class ReplyController extends Controller
 {
@@ -40,7 +42,10 @@ class ReplyController extends Controller
         if($this->reply->isDuplicate($data))
             return redirect()->back()->withInput()->withErrors('请不要重复提交评论！');
         try{
-            $this->reply->createReply($data);
+            $reply = $this->reply->createReply($data);
+            $toUsers = $this->users;
+            if(count($toUsers))
+                Event::fire(new ReplyMention($reply,$toUsers));
             return redirect(route('topic.show',$data['topic_id']));
         }catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors($e->getMessage());

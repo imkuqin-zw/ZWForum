@@ -31,7 +31,7 @@
                                             <span data-toggle="tooltip" class="count_seperator">/</span>
                                             <span data-toggle="tooltip" class="count_of_visits" title="查看数">{{$topTopic->view_count}}</span>
                                             <span data-toggle="tooltip" class="count_seperator">|</span>
-                                            <abbr data-toggle="tooltip" title="" class="timeago popover-with-html" data-toggle="tooltip" data-original-title="{{$topTopic->created_at}}">{{date_former($topTopic->created_at)}}</abbr>
+                                            <abbr data-toggle="tooltip" title="" class="timeago popover-with-html" data-toggle="tooltip" data-original-title="{{$topTopic->created_at}}">{{$topTopic->created_at->diffForHumans()}}</abbr>
                                         </div>
                                     </a>
                                     <div class="avatar pull-left">

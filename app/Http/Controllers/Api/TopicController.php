@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewTopic;
 use App\Http\Requests\CreateTopicForm;
 use App\Http\Requests\UpdateTopicForm;
 use App\Repositories\TopicRepository;
@@ -94,8 +95,8 @@ class topicController extends ApiController
         $markdown = new Markdown;
         $topicData['content'] = $markdown->convertMarkdownToHtml($topicData['content']);
         $topicData['user_id'] = Auth::user()->id;
-        $this->topic->createTopic($topicData);
-
+        $topic = $this->topic->createTopic($topicData);
+        Event::fire(new NewTopic($topic));
         return $this->created();
 
     }

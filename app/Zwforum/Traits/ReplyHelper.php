@@ -11,6 +11,7 @@ namespace App\Zwforum\Traits;
 
 use App\User;
 use App\Zwforum\Markdown\Markdown;
+use Illuminate\Support\Facades\Auth;
 
 trait ReplyHelper
 {
@@ -40,13 +41,14 @@ trait ReplyHelper
     }
 
     protected function parse($replyContent){
+        $this->replyContent = $replyContent;
+        $userNames = $this->getReplyUser();
         $markdown = new Markdown();
         $this->replyContent = $markdown->convertMarkdownToHtml($replyContent);
         $this->replyParsed = $this->replyContent;
-        $userNames = $this->getReplyUser();
-
         if(count($userNames) > 0)
-            $this->users = User::whereIn('name',$userNames)->get();
+            $this->users = User::whereIn('name',$userNames)
+                ->whereNotIn('name',[Auth::user()->name])->get();
         $this->replaceUser();
         $this->replaceEmoji();
 

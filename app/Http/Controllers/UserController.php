@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FollowerForm;
+use App\Repositories\ReplyNotificationRepository;
+use App\Repositories\TopicNotificationRepository;
 use App\Repositories\UserRepository;
 use App\Zwforum\Image\ImageUpload;
 use Illuminate\Database\QueryException;
@@ -17,16 +19,22 @@ class UserController extends Controller
      * @var UserRepository
      */
     protected $user;
+    protected $mention;
+    protected $notificaiton;
 
     /**
      * UserController constructor.
      *
      * @param UserRepository $user
+     * @param ReplyNotificationRepository $mention
+     * @param TopicNotificationRepository $notification
      */
-    public function __construct(UserRepository $user)
+    public function __construct(UserRepository $user, ReplyNotificationRepository $mention, TopicNotificationRepository $notification)
     {
         //parent::__construct();
         $this->user = $user;
+        $this->mention = $mention;
+        $this->notificaiton = $notification;
     }
 
     /**
@@ -135,6 +143,9 @@ class UserController extends Controller
      * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function updatePortrait(UpdateUserForm $request, $id){
+        if(Auth::user()->id != $id){
+            abort(403);
+        }
         if ($file = $request->file('portrait')) {
             try {
                 $folderName = public_path().'/uploads/portraits/';
@@ -179,6 +190,9 @@ class UserController extends Controller
      */
     public function updatePassword(UpdateUserForm $request, $id)
     {
+        if(Auth::user()->id != $id){
+            abort(403);
+        }
         $data = $request->only(['old_password','password','password_confirmation']);
         if($this->user->updatePassword($id,$data))
             return redirect()->back()->with('status', '更新成功！');
@@ -226,5 +240,17 @@ class UserController extends Controller
     {
         $this->user->deletefollower($id);
         return redirect()->back();
+    }
+
+    public function getNotifications(){
+        $mentionsCount = $this->mention->getCount(Auth::id());
+        $notifications = $this->notificaiton->getNotifications(Auth::id());
+        return view('user.notifications',compact('mentionsCount','notifications'));
+    }
+
+    public function getMentions(){
+        $notificationsCount = $this->notificaiton->getCount(Auth::id());
+        $notifications = $this->mention->getNotifications(Auth::id());
+        return view('user.mentions',compact('notificationsCount','notifications'));
     }
 }

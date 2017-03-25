@@ -52,7 +52,7 @@ class ReplyRepository extends BaseRepository
             throw $e;
         }
         DB::commit();
-        return $reply->id;
+        return $reply;
     }
 
     /**

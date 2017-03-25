@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SomeEvent' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\NewTopic' => [
+            'App\Listeners\NewTopicListener',
+        ],
+        'App\Events\ReplyMention' => [
+            'App\Listeners\ReplyMentionListener',
+        ],
     ];
 
     /**

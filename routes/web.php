@@ -39,6 +39,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('tag/{id}','TagController@show')->name('tag.show');
     Route::post('reply','ReplyController@store')->name('reply.create')->middleware('auth');
     Route::delete('reply/{id}','ReplyController@destroy')->name('reply.delete')->middleware('auth');
+   // Route::get('user/messages','UserController@getMessages')->name('user.getMessages');
+    Route::get('user/notifications','UserController@getNotifications')->name('user.notifications');
+    Route::get('user/mentions','UserController@getMentions')->name('user.mentions');
     Route::get('user/{id}/topics','UserController@getTopicsList')->name('user.topicsList');
     Route::get('user/{id}/replies','UserController@getRepliesList')->name('user.repliesList');
     Route::get('user/{id}/follower','UserController@getFollowerList')->name('user.followerList');

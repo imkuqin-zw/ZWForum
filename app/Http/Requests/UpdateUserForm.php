@@ -16,17 +16,18 @@ class UpdateUserForm extends FormRequest
      */
     public function authorize()
     {
-        if ( !Auth::check() )
-        {
-            return false;
-        }
-
-        $theUser = User::find($this->segment(2));
-        // 如果是编辑操作, 或者当前用户不是对象创建者
-        if ( !$theUser || $theUser->id != Auth::id()) {
-            return false;
-        }
-
+//        if ( !Auth::check() )
+//        {
+//            return false;
+//        }
+//        echo $this->input('id');
+//        $theUser = User::where('id',$this->segment(2))->get();
+//        dump($theUser);
+//        return ;
+//        // 如果是编辑操作, 或者当前用户不是对象创建者
+//        if ( !$theUser || ($theUser->id != Auth::id() && !Auth::user()->can('edit-user'))) {
+//            return false;
+//        }
         return true;
     }
 

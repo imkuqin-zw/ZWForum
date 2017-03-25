@@ -24,7 +24,7 @@
                             <a data-toggle="tooltip" data-original-title="作者" href="{{route('user.show',$topic->user->id)}}">{{$topic->user->name}} </a>
                             ⋅ 发布于
                         </span>
-                        <abbr title="" data-toggle="tooltip" data-original-title="{{$topic->created_at}}">{{ date_former($topic->created_at)}}</abbr>
+                        <abbr title="" data-toggle="tooltip" data-original-title="{{$topic->created_at}}">{{ $topic->created_at->diffForHumans()}}</abbr>
                         <span>⋅ 阅读 {{$topic->view_count}} ⋅ 赞 <span id="vote_count">{{$topic->vote_count}}</span>
                             @if($isVoted === null)
                             @else
@@ -100,7 +100,7 @@
                                     <div class="meta">
                                         <a name="reply{{$reply->id}}" id="reply{{$reply->id}}" class="anchor" href="#reply{{$reply->id}}" aria-hidden="true">#{{$key+1}}</a>
                                         <span> ⋅  </span>
-                                        <abbr data-toggle="tooltip" data-original-title="{{$reply->created_at}}">{{date_former($reply->created_at)}}</abbr>
+                                        <abbr data-toggle="tooltip" data-original-title="{{$reply->created_at}}">{{$reply->created_at->diffForHumans()}}</abbr>
                                     </div>
                                 </div>
                                 <div class="media-body markdown-reply content-body">

@@ -289,6 +289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 for (var tmp in _this.selectedRoles) {
                     _this.formData.roles.push(_this.selectedRoles[tmp].id);
                 }
+                if (_this.formData.password == '') delete _this.formData["password"];
 
                 axios.put(window.Domain + 'api/admin/user/' + _this.$route.params.userId, _this.formData).then(function (response) {
                     _this.errorShow = false;
@@ -552,8 +553,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, {
       name: "validate",
       rawName: "v-validate:password_confirmation.initial",
-      value: ('required:|confirmed:password'),
-      expression: "'required:|confirmed:password'",
+      value: ('confirmed:password'),
+      expression: "'confirmed:password'",
       arg: "password_confirmation",
       modifiers: {
         "initial": true

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewTopic;
 use App\Http\Requests\CreateTopicForm;
 use App\Http\Requests\VoteForm;
 use App\Model\Followers;
@@ -12,6 +13,8 @@ use App\Zwforum\Image\ImageUpload;
 use App\Zwforum\Markdown\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use League\Flysystem\Exception;
 
 class TopicController extends Controller
@@ -92,8 +95,10 @@ class TopicController extends Controller
         $topicData['content'] = app(Markdown::class)->convertMarkdownToHtml($topicData['content']);
         $topicData['user_id'] = Auth::user()->id;
         try{
-            $id = $this->topic->createTopic($topicData);
-            return redirect(route('topic.show', $id));
+            $topic = $this->topic->createTopic($topicData);
+            Event::fire(new NewTopic($topic));
+            //Notification::send($users, new InvoicePaid($invoice));
+            return redirect(route('topic.show', $topic->id));
         }catch (\Exception $e){
             return redirect()->back()->withErrors($e->getMessage());
         }

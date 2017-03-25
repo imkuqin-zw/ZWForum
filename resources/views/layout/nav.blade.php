@@ -29,12 +29,30 @@
                 <li><a href="{{route('register')}}">注册</a></li>
             </ul>
             @else
+            <?php
+                $topicNotificationsCount = app(\App\Repositories\TopicNotificationRepository::class)->getCount(Auth::user()->id);
+                $replyNotificationsCount = app(\App\Repositories\ReplyNotificationRepository::class)->getCount(Auth::user()->id);
+                $notificationsCount = (int)$topicNotificationsCount + (int)$replyNotificationsCount;
+            ?>
             <ul class="nav navbar-nav navbar-right">
-
+                <li><a href="{{route('topic.create')}}"><i class="glyphicon glyphicon-plus" ></i></a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                        通知 <span class="badge" @if($topicNotificationsCount)style="background-color: #d15b47" @endif id="notification-count" >{{  $notificationsCount }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ route('user.notifications') }}" >关注的话题 <span class="badge" @if($topicNotificationsCount)style="background-color: #d15b47" @endif >{{  $topicNotificationsCount }}</span></a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ route('user.mentions') }}" >@提及到我 <span class="badge" @if($topicNotificationsCount)style="background-color: #d15b47" @endif id="notification-count" >{{  $replyNotificationsCount }}</span></a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="avatar-topnav" alt="{{Auth::User()->name}}" src="{{(Auth::User()->portrait_min)? (asset('uploads/portraits/'.Auth::User()->portrait_min)):asset('uploads/portraits/profile-pic_min.png')}}"> {{Auth::User()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-
                         <li><a href="{{route('user.show',Auth::User()->id)}}">个人中心</a></li>
                         <li><a href="{{route('user.edit',Auth::User()->id)}}">编辑资料</a></li>
                         @if(Auth::User()->is_admin == 'yes')

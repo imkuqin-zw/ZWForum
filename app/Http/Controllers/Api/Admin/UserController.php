@@ -101,10 +101,8 @@ class UserController extends ApiController
         if(!Auth::user()->can('edit-user'))
             abort(403);
         $data = $request->all();
-        if ($data['password']!='')
+        if (isset($data['password']))
             $data['password'] = Hash::make($data['password']);
-        else
-            unset($data['password']);
         $user = $this->user->updateUser($id,$data);
         $file = $request->input('portrait');
         $oldPortrait['portrait_min'] = $user->portrait_min;

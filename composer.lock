@@ -726,16 +726,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v2.0.3",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "72f3c0e4ae6b283bd71c8050eb0d438e3880e4c7"
+                "reference": "555fcfdf34e24175e4f7d1b0784c1665abc0967d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/laravel/passport/72f3c0e4ae6b283bd71c8050eb0d438e3880e4c7.zip",
-                "reference": "72f3c0e4ae6b283bd71c8050eb0d438e3880e4c7",
+                "url": "https://files.phpcomposer.com/files/laravel/passport/555fcfdf34e24175e4f7d1b0784c1665abc0967d.zip",
+                "reference": "555fcfdf34e24175e4f7d1b0784c1665abc0967d",
                 "shasum": ""
             },
             "require": {
@@ -786,7 +786,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2017-02-08T22:33:21+00:00"
+            "time": "2017-03-09T16:21:02+00:00"
         },
         {
             "name": "laravel/socialite",

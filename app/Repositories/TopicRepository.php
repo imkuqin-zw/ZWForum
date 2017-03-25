@@ -191,7 +191,7 @@ class TopicRepository extends BaseRepository
             throw $e;
         }
         DB::commit();
-        return $topic->id;
+        return $topic;
     }
 
     /**
