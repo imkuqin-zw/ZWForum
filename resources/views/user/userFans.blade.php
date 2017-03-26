@@ -11,33 +11,33 @@
 
             <ol class="breadcrumb panel" style="border-color: #d9edf7; ">
                 <li><a href="{{route('user.show',$user->id)}}">个人中心</a></li>
-                <li class="active">Ta 关注的用户</li>
+                <li class="active">Ta 的关注者</li>
             </ol>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    @if($followers->total())
+                    @if($fans->total())
                         <ul class="list-group ">
-                            @foreach($followers as $follower)
+                            @foreach($fans as $item)
                                 <li class="list-group-item">
-                                    <a href="{{route('user.show',$follower->follower_id)}}" title="{{$follower->name}}">
-                                        <img style="" class="img-thumbnail avatar-middle avatar avatar-small inline-block " src="{{asset('uploads/portraits').'/'}}{{($follower->portrait_min)?:'profile-pic_min.png'}}">
-                                        {{$follower->name}}
+                                    <a href="{{route('user.show',$item->user_id)}}" title="{{$item->name}}">
+                                        <img style="" class="img-thumbnail avatar-middle avatar avatar-small inline-block " src="{{asset('uploads/portraits').'/'}}{{($item->portrait_min)?:'profile-pic_min.png'}}">
+                                        {{$item->name}}
                                     </a>
-                                    @if($follower->description)
+                                    @if($item->description)
                                     <span class="introduction">
-                                         - {{$follower->description}}
+                                         - {{$item->description}}
                                     </span>
                                     @endif
                                 </li>
                             @endforeach
                         </ul>
                         <div class="pull-right">
-                            @if($followers->lastPage() == 1)
+                            @if($fans->lastPage() == 1)
                                 <div class="pagination">
                                     <span style="color:#8b8a8a">已经是最后一页了</span>
                                 </div>
                             @else
-                                {!! $followers->render() !!}
+                                {!! $fans->render() !!}
                             @endif
                         </div>
                     @else

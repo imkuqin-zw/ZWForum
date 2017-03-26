@@ -46,7 +46,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('user/{id}/topics','UserController@getTopicsList')->name('user.topicsList');
     Route::get('user/{id}/replies','UserController@getRepliesList')->name('user.repliesList');
     Route::get('user/{id}/follower','UserController@getFollowerList')->name('user.followerList');
+    Route::get('user/{id}/fans','UserController@getFansList')->name('user.fansList');
     Route::get('user/{id}/votes','UserController@getVotesList')->name('user.votesList');
+    Route::get('user/{id}/excellence','UserController@getExcellencesList')->name('user.excellencesList');
     Route::get('user/{id}/edit','UserController@edit')->name('user.edit')->middleware('auth');
     Route::get('user/{id}/portrait','UserController@editPortrait')->name('user.editPortrait')->middleware('auth');
     Route::get('user/{id}/password','UserController@editPassword')->name('user.editPassword')->middleware('auth');

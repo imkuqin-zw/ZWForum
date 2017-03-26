@@ -19,7 +19,7 @@
     <hr>
     <div class="follow-info row">
         <div class="col-xs-4">
-            <a class="counter" href="{{route('user.followerList',$user->id)}}">{{$user->follower_count}}</a>
+            <a class="counter" href="{{route('user.fansList',$user->id)}}">{{$user->follower_count}}</a>
             <a class="text" href="{{route('user.followerList',$user->id)}}">关注者</a>
         </div>
         <div class="col-xs-4">
@@ -27,8 +27,8 @@
             <a class="text" href="{{route('user.topicsList',$user->id)}}">话题</a>
         </div>
         <div class="col-xs-4">
-            <a class="counter" href="{{route('user.votesList',$user->id)}}">{{$collectionCount}}</a>
-            <a class="text" href="{{route('user.votesList',$user->id)}}">收藏</a>
+            <a class="counter" href="{{route('user.excellencesList',$user->id)}}">{{$excellenceCount}}</a>
+            <a class="text" href="{{route('user.excellencesList',$user->id)}}">精华</a>
         </div>
     </div>
     @if(Auth::check() && Auth::id() != $user->id)

@@ -62,21 +62,10 @@
   }
 </script>
 <style lang="scss">
-    .profile-picture {
-        border: 1px solid #CCC;
-        background-color: #FFF;
-        padding: 4px;
-        display: inline-block;
-        max-width: 100%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        box-shadow: 1px 1px 1px rgba(0,0,0,.15);
-    }
-    .img-responsive{
+    .box-profile .img-responsive{
         display: block;
         max-width: 100%;
-        height: auto;
+        height: 100px;
     }
     .profile-info-name {
         text-align: right;

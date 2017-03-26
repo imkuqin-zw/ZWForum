@@ -47,9 +47,9 @@ class UserController extends Controller
         $user = $this->user->getById($id);
         $topics = $this->user->getAllTopics($id);
         $topicCount = $this->user->getTopicCount($id);
-        $collectionCount = $this->user->getCollectionCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
         $userMenu = 'topic';
-        return view('user.userTopics',compact('topics','user','topicCount','collectionCount','userMenu'));
+        return view('user.userTopics',compact('topics','user','topicCount','excellenceCount','userMenu'));
     }
 
     /**
@@ -62,9 +62,9 @@ class UserController extends Controller
         $user = $this->user->getById($id);
         $replies = $this->user->getAllReplies($id);
         $topicCount = $this->user->getTopicCount($id);
-        $collectionCount = $this->user->getCollectionCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
         $userMenu = 'reply';
-        return view('user.userReplies',compact('replies','user','topicCount','collectionCount','userMenu'));
+        return view('user.userReplies',compact('replies','user','topicCount','excellenceCount','userMenu'));
     }
 
     /**
@@ -77,24 +77,48 @@ class UserController extends Controller
         $user = $this->user->getById($id);
         $topics = $this->user->getAllVotes($id);
         $topicCount = $this->user->getTopicCount($id);
-        $collectionCount = $this->user->getCollectionCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
         $userMenu = 'vote';
-        return view('user.userVotes',compact('topics','user','topicCount','collectionCount','userMenu'));
+        return view('user.userVotes',compact('topics','user','topicCount','excellenceCount','userMenu'));
     }
 
     /**
-     * show the user's follwer list page.
+     * 获取关注了该用户的用户
      *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getfollowerList($id){
+    public function getFansList($id){
+        $user = $this->user->getById($id);
+        $fans = $this->user->getAllFans($id);
+        $topicCount = $this->user->getTopicCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
+        $userMenu = 'fans';
+        return view('user.userFans',compact('fans','user','topicCount','excellenceCount','userMenu'));
+    }
+
+    public function getExcellencesList($id){
+        $user = $this->user->getById($id);
+        $topics = $this->user->getAllExcellences($id);
+        $topicCount = $this->user->getTopicCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
+        $userMenu = 'excellence';
+        return view('user.userExcellences',compact('topics','user','topicCount','excellenceCount','userMenu'));
+    }
+
+    /**
+     * show the user's attention list page.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getFollowerList($id){
         $user = $this->user->getById($id);
         $followers = $this->user->getAllFollowers($id);
         $topicCount = $this->user->getTopicCount($id);
-        $collectionCount = $this->user->getCollectionCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
         $userMenu = 'follower';
-        return view('user.userFollowers',compact('followers','user','topicCount','collectionCount','userMenu'));
+        return view('user.userFollowers',compact('followers','user','topicCount','excellenceCount','userMenu'));
     }
 
     /**
@@ -109,9 +133,9 @@ class UserController extends Controller
         $recentTopics = $this->user->getRecentTopics($id,10);
         $recentReplies = $this->user->getRecentReplies($id,10);
         $topicCount = $this->user->getTopicCount($id);
-        $collectionCount = $this->user->getCollectionCount($id);
+        $excellenceCount = $this->user->getExcellenceCount($id);
         $userMenu = 'default';
-        return view('user.show',compact('userMenu','user','recentTopics','recentReplies','topicCount','collectionCount','userMenu'));
+        return view('user.show',compact('userMenu','user','recentTopics','recentReplies','topicCount','excellenceCount','userMenu'));
     }
 
     /**

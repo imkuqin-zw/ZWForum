@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title',$user->name.'-关注列表')
+@section('title',$user->name.'-精品列表')
 
 @section('content')
     <div class="container border-color main-container">
@@ -8,36 +8,32 @@
             @include('user.components.userInfoMenu')
         </div>
         <div class="col-md-9 ">
-
             <ol class="breadcrumb panel" style="border-color: #d9edf7; ">
                 <li><a href="{{route('user.show',$user->id)}}">个人中心</a></li>
-                <li class="active">Ta 关注的用户</li>
+                <li class="active">Ta 的精华文章</li>
             </ol>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    @if($followers->total())
-                        <ul class="list-group ">
-                            @foreach($followers as $follower)
+                    @if($topics->total())
+                        <ul class="list-group">
+                            @foreach($topics as $topic)
                                 <li class="list-group-item">
-                                    <a href="{{route('user.show',$follower->follower_id)}}" title="{{$follower->name}}">
-                                        <img style="" class="img-thumbnail avatar-middle avatar avatar-small inline-block " src="{{asset('uploads/portraits').'/'}}{{($follower->portrait_min)?:'profile-pic_min.png'}}">
-                                        {{$follower->name}}
-                                    </a>
-                                    @if($follower->description)
-                                    <span class="introduction">
-                                         - {{$follower->description}}
-                                    </span>
-                                    @endif
+                                    <a href="{{route('topic.show',$topic->id)}}" title="{{$topic->title}}">{{$topic->title}}</a>
+                                    <span class="meta">
+                                    <a href="{{route('category.show',$topic->category->id)}}" title="{{$topic->category->name}}">{{$topic->category->name}}</a>
+                                    <span> ⋅ </span> {{$topic->vote_count}} 点赞 <span> ⋅ </span> {{$topic->reply_count}} 回复 <span> ⋅ </span>
+                                    <span data-toggle="tooltip" data-original-title="{{$topic->created_at}}" title="{{$topic->created_at}}">{{$topic->created_at->diffForHumans()}}</span>
+                                </span>
                                 </li>
                             @endforeach
                         </ul>
                         <div class="pull-right">
-                            @if($followers->lastPage() == 1)
+                            @if($topics->lastPage() == 1)
                                 <div class="pagination">
                                     <span style="color:#8b8a8a">已经是最后一页了</span>
                                 </div>
                             @else
-                                {!! $followers->render() !!}
+                                {!! $topics->render() !!}
                             @endif
                         </div>
                     @else
@@ -50,4 +46,14 @@
 @endsection
 
 @section('script')
+    <script>
+      $(function () {
+        $("[data-toggle='tooltip']").tooltip({
+          container: "body"
+        });
+      });
+      function voteClick(id) {
+        alert(id);
+      }
+    </script>
 @endsection

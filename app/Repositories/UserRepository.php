@@ -85,7 +85,7 @@ class UserRepository extends BaseRepository
      * @param int $number
      * @return mixed
      */
-    public function getAllTopics($id,$number=20)
+    public function getAllTopics($id,$number=30)
     {
         return Topic::where('user_id',$id)
             ->whereHas('category',function($q){
@@ -100,7 +100,7 @@ class UserRepository extends BaseRepository
      * @param int $number
      * @return mixed
      */
-    public function getAllReplies($id,$number=10)
+    public function getAllReplies($id,$number=20)
     {
         return Reply::where('user_id',$id)
             ->whereHas('topic.category',function($q){
@@ -115,17 +115,11 @@ class UserRepository extends BaseRepository
      * @param int $number
      * @return mixed
      */
-    public function getAllVotes($id,$number=20)
+    public function getAllVotes($id,$number=30)
     {
-        $topics = DB::table('topic_user')->select('topic_id')->where('user_id',[$id])->get();
-        $topicId = [];
-        foreach ($topics as $topic)
-            $topicId[] = $topic->topic_id;
-        return Topic::whereIn('id',$topicId)->whereNotIn('user_id',[$id])
-            ->whereHas('category',function($q){
-                $q->where('is_blocked','no');
-            })->paginate($number);
-
+        return Topic::leftJoin('topic_user','topics.id','=','topic_user.topic_id')
+            ->where('topics.user_id','!=',$id)
+            ->where('topic_user.user_id',$id)->paginate($number);
     }
 
     /**
@@ -137,12 +131,20 @@ class UserRepository extends BaseRepository
      */
     public function getAllFollowers($id,$number=20)
     {
-        $follwers = Followers::where('user_id',$id)->select('follower_id')->get();
-        $userId = [];
-        foreach ($follwers as $follwer)
-            $userId[] = $follwer->follower_id;
-        return User::whereIn('id',$userId)->paginate($number);
+        return User::leftJoin('followers','users.id','=','followers.follower_id')
+            ->where('followers.user_id',$id)->paginate($number);
+    }
 
+    /**
+     * 获得关注我的人
+     *
+     * @param $id
+     * @param int $number
+     * @return mixed
+     */
+    public function getAllFans($id,$number=20){
+        return User::leftJoin('followers','users.id','=','followers.user_id')
+            ->where('followers.follower_id',$id)->paginate($number);
     }
 
     /**
@@ -159,23 +161,57 @@ class UserRepository extends BaseRepository
 
     }
 
+
+    /**
+     * 获得被收藏的话题
+     *
+     * @param $id
+     * @param int $number
+     * @return mixed
+     */
+    public function getCollectionTopics($id,$number = 30){
+        return Topic::leftJoin('topic_user','topics.id','=','topic_user.topic_id')
+            ->where('topics.user_id',$id)
+            ->where('topic_user.user_id','!=',$id)->paginate($number);
+    }
+
+    /**
+     * 获得被加精的文章
+     *
+     * @param $id
+     * @param int $number
+     * @return mixed
+     */
+    public function getALLExcellences($id,$number = 30){
+        return Topic::where('is_excellent','yes')
+            ->where('user_id',$id)
+            ->paginate($number);
+    }
+
+    /**
+     * 获得被加精的文章的数量
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getExcellenceCount($id)
+    {
+        return Topic::where('is_excellent','yes')
+            ->where('user_id',$id)
+            ->count();
+    }
+
     /**
      * get the collection count of the user.
      *
      * @param $id
      * @return mixed
      */
-    public function getCollectionCount($id){
-        $topics = Topic::where('user_id',$id)
-            ->whereHas('category',function($q){
-                $q->where('is_blocked','no');
-            })->select('id')->get();
-        $topicId = [];
-        foreach ($topics as $topic)
-            $topicId[] = $topic->id;
-        if(!count($topicId))
-            return 0;
-        return DB::table('topic_user')->whereIn('topic_id',$topicId)->whereNotIn('user_id',[$id])->count();
+    public function getCollectionCount($id)
+    {
+        return Topic::leftJoin('topic_user','topics.id','=','topic_user.topic_id')
+            ->where('topics.user_id',$id)
+            ->where('topic_user.user_id','!=',$id)->count();
     }
 
     /**
@@ -185,9 +221,9 @@ class UserRepository extends BaseRepository
      * @param $input
      * @return \App\Repositories\User|bool
      */
-    public function updatePassword($id,$input){
+    public function updatePassword($id,$input)
+    {
         $user = $this->getById($id);
-
         if(!Hash::check($input['old_password'], $user->password))
             return false;
         return $this->save($user, ['password' => Hash::make($input['password'])]);
@@ -214,7 +250,7 @@ class UserRepository extends BaseRepository
      * @param $number
      * @return mixed
      */
-    public function getRecentReplies($id, $number=10    ){
+    public function getRecentReplies($id, $number=10){
         return Reply::where('user_id',$id)->orderBy('created_at','desc')
             ->whereHas('topic.category',function($q){
                 $q->where('is_blocked','no');

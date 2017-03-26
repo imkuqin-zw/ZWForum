@@ -17,9 +17,6 @@
     .search-results a {
         color: #333;
     }
-    .search-results a:hover {
-        text-decoration: underline;
-    }
     .search-results .result {
         margin-bottom: 20px;
     }
@@ -39,6 +36,9 @@
     .search-results .user .info {
         margin-top: 4px;
         font-size: 14px;
+    }
+    .search-results .user .info a:hover{
+        text-decoration: underline;
     }
     .search-results .user .info.number {
         color: #666;
@@ -60,11 +60,15 @@
     .search-results .result .title {
         font-size: 18px;
     }
+    .search-results .result .title a:hover{
+        text-decoration: underline;
+    }
     .search-results .result .info .url a {
         color: #337ab7;
     }
     .search-results .result .info .url a:hover {
         color: #23527c;
+        text-decoration: underline;
     }
     .search-results .avatar-small {
         width: 26px;
