@@ -93,7 +93,7 @@
                                     <span style="color:#8b8a8a">已经是最后一页了</span>
                                 </div>
                             @else
-                            {!! $topics->render() !!}
+                                {!! $topics->render() !!}
                             @endif
                         </div>
                         @else

@@ -117,7 +117,7 @@ class UserRepository extends BaseRepository
      */
     public function getAllVotes($id,$number=20)
     {
-        $topics = DB::table('、')->select('topic_id')->where('user_id',[$id])->get();
+        $topics = DB::table('topic_user')->select('topic_id')->where('user_id',[$id])->get();
         $topicId = [];
         foreach ($topics as $topic)
             $topicId[] = $topic->topic_id;
@@ -255,5 +255,15 @@ class UserRepository extends BaseRepository
         });
     }
 
+    /**
+     * 搜索用户
+     *
+     * @param $query
+     * @param int $number
+     * @return mixed
+     */
+    public function search($query,$number = 30){
+        return $this->model->search($query, null, true)->limit(5)->get();
+    }
 
 }

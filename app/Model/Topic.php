@@ -4,10 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Topic extends Model
 {
     use SoftDeletes;
+    use SearchableTrait;
 
     protected $dates = ['deleted_at'];
 
@@ -18,6 +20,13 @@ class Topic extends Model
      */
     protected $fillable = [
         'id', 'reply_at','title','content','user_id','view_count','vore_count','reply_count','istop','order','is_top','is_blocked','is_excellent','category_id'
+    ];
+
+    protected $searchable = [
+        'columns' => [
+            'topics.title' => 10,
+            'topics.content' => 5,
+        ],
     ];
 
     public function category()

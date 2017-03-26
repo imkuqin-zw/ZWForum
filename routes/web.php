@@ -24,6 +24,7 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('search','SearchController@index')->name('search');
     Route::group(['as' => 'topic.'], function () {
         Route::get('topic/create','TopicController@create')->name('create')->middleware('auth');
         Route::get('topic/{id}/edit','TopicController@edit')->name('edit')->middleware('auth');
@@ -56,8 +57,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::match(['put', 'patch'],'user/{id}/password','UserController@updatePassword')->name('user.updatePassword')->middleware('auth');
     Route::match(['put', 'patch'],'user/{id}','UserController@update')->name('user.update')->middleware('auth');
 
+
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin_auth']], function () {
-    Route::get('{path?}', 'AdminController@index')->where('path', '[\/\w\.-]*')->name('admin.index');;
+    Route::get('{path?}', 'AdminController@index')->where('path', '[\/\w\.-]*')->name('admin.index');
 });

@@ -20,9 +20,9 @@
                 <li @if(isset($nav_category) && $nav_cate->id == $nav_category) class="active" @endif ><a href="{{route('category.show',$nav_cate->id)}}">{{$nav_cate->name}}</a></li>
                 @endforeach
             </ul>
-            {{--<form action="#" class="navbar-form navbar-left">--}}
-                {{--<input type="text" class="form-control" placeholder="搜索">--}}
-            {{--</form>--}}
+            <form action="{{ route('search') }}" class="navbar-form navbar-left">
+                <input type="text" name="wd" class="form-control" placeholder="搜索" value="@if(isset($query)){{ $query }}@endif">
+            </form>
             @if(!Auth::check())
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{route('login')}}">登录</a></li>
@@ -38,7 +38,7 @@
                 <li><a href="{{route('topic.create')}}"><i class="glyphicon glyphicon-plus" ></i></a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
-                        通知 <span class="badge" @if($topicNotificationsCount)style="background-color: #d15b47" @endif id="notification-count" >{{  $notificationsCount }}</span>
+                        通知 <span class="badge" @if($notificationsCount)style="background-color: #d15b47" @endif >{{  $notificationsCount }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
@@ -46,7 +46,7 @@
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="{{ route('user.mentions') }}" >@提及到我 <span class="badge" @if($topicNotificationsCount)style="background-color: #d15b47" @endif id="notification-count" >{{  $replyNotificationsCount }}</span></a>
+                            <a href="{{ route('user.mentions') }}" >@提及到我 <span class="badge" @if($replyNotificationsCount)style="background-color: #d15b47" @endif >{{  $replyNotificationsCount }}</span></a>
                         </li>
                     </ul>
                 </li>

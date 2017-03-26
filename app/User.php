@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,15 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    use SearchableTrait;
+    protected $searchable = [
+        'columns' => [
+            'users.name' => 10,
+            'users.real_name' => 10,
+            'users.description' => 10,
+        ],
     ];
 
 }

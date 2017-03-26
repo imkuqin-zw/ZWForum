@@ -286,18 +286,9 @@ class TopicRepository extends BaseRepository
             ->orderBy('updated_at', 'desc');
         if($where)
             $topics = $topics->where($where);
-//                ->where('is_blocked','no')
-//                ->whereHas('category',function($q){
-//                    $q->where('is_blocked','no');
-//                })
-//                ->paginate($number);
         if($whereNotIn)
             $topics = $topics->whereNotIn('id',$whereNotIn);
-//                ->where('is_blocked','no')
-//                ->whereHas('category',function($q){
-//                    $q->where('is_blocked','no');
-//                })
-//                ->paginate($number);
+
         $topics = $topics->whereHas('category',function($q){
                 $q->where('is_blocked','no');
             })->where('is_blocked','no')
@@ -381,6 +372,17 @@ class TopicRepository extends BaseRepository
                 $q->where('is_blocked','no');
             })->where('is_blocked','no')
             ->get();
+    }
+
+    /**
+     * 搜索文章
+     *
+     * @param $query
+     * @param int $number
+     * @return mixed
+     */
+    public function search($query,$number = 30){
+        return $this->model->search($query, null, true)->paginate($number);
     }
 
 }
