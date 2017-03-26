@@ -47678,7 +47678,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('a', {
     staticClass: "logo",
     attrs: {
-      "href": "index2.html"
+      "href": "#/"
     }
   }, [_c('span', {
     staticClass: "logo-mini"

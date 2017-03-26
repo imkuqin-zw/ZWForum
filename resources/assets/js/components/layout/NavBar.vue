@@ -1,7 +1,7 @@
 <template>
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="#/" class="logo">
             <span class="logo-mini">ZWF</span>
             <span class="logo-lg"><b>ZWForum</b></span>
         </a>
