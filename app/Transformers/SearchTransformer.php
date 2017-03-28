@@ -9,12 +9,16 @@
 namespace App\Transformers;
 
 
-class ReplyTransformer extends BaseTransformer
+use App\Model\Topic;
+use App\User;
+use League\Fractal\TransformerAbstract;
+
+class SearchTransformer extends TransformerAbstract
 {
-    public function transformData($model)
+    public function transform(Topic $topic,User $user)
     {
         return [
-            'id' => $model->id,
+            'id' => $topic->id,
             'user' => $model->user->name,
             'user_id' => $model->user_id,
             'user_potrait' => $model->user->portrai_min,

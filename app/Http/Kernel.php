@@ -44,6 +44,12 @@ class Kernel extends HttpKernel
         ],
         'admin_auth' => [
             \App\Http\Middleware\AdminAuth::class,
+        ],
+        'api_banned_auth' => [
+            \App\Http\Middleware\CheckUserIsItBannedForApi::class,
+        ],
+        'banned_auth' => [
+            \App\Http\Middleware\CheckUserIsItBanned::class,
         ]
     ];
 

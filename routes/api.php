@@ -13,7 +13,7 @@
 |
 */
 
-Route::group(['prefix' => 'admin','middleware' => 'auth:api','namespace' => 'Api\Admin','as' => 'api.admin.'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['auth:api','banned_auth'],'namespace' => 'Api\Admin','as' => 'api.admin.'], function () {
     Route::get('user/perms','UserController@getPerms')->name('user.perms');
     Route::resource('user','UserController');
     Route::resource('tag','TagController');
@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Api','as' => 'api.'], function () {
         Route::get('topic/{id}','TopicController@show')->name('show');
         Route::get('topic','TopicController@index')->name('topicList');
     });
+    Route::get('user/banned','UserController@isBanned')->name('user.banned');
     Route::get('user/{id}/topic','UserController@getUserTopic')->name('user.getUserTopic');
     Route::get('user/{id}/reply','UserController@getUserReply')->name('user.getUserReply');
     Route::get('user/{id}/vote','UserController@getUserVote')->name('user.getUserVote');
@@ -44,18 +45,18 @@ Route::group(['namespace' => 'Api','as' => 'api.'], function () {
     Route::get('tag/showlist','TagController@showList')->name('tag.showList');
 
     Route::get('reply/{id}','ReplyController@index')->name('reply.index');
-
+    Route::get('search','SearchController@search')->name('search');
 
 
 });
 
-Route::group(['middleware' => 'auth:api','namespace' => 'Api','as' => 'api.'], function () {
+Route::group(['middleware' => ['auth:api','api_banned_auth'],'namespace' => 'Api','as' => 'api.'], function () {
     Route::group(['as' => 'topic.'],function () {
         Route::post('topic/uploadimg','TopicController@uploadImg')->name('uploadImg');
         Route::post('topic', 'TopicController@store')->name('create');
-        Route::put('topic/{id}/restore', 'TopicController@restore')->name('delete');
+//        Route::put('topic/{id}/restore', 'TopicController@restore')->name('restore');
         Route::put('topic/{id}', 'TopicController@update')->name('update');
-       // Route::delete('topic/{id}/softdelete', 'TopicController@softDelete')->name('delete');
+//        Route::delete('topic/{id}/softdelete', 'TopicController@softDelete')->name('delete');
         Route::delete('topic/{id}', 'TopicController@destroy')->name('destroy');
         Route::get('tag/editlist','TagController@editList')->name('tag.editList');
         Route::get('cate/editlist','CategoryController@editList')->name('cate.editList');

@@ -277,4 +277,12 @@ class UserController extends Controller
         $notifications = $this->mention->getNotifications(Auth::id());
         return view('user.mentions',compact('notificationsCount','notifications'));
     }
+
+
+    public function isBanned(){
+        if(! Auth::check() || Auth::user()->is_banned == 'no')
+            return redirect("/");
+        else
+            return view('pages.user-banned');
+    }
 }

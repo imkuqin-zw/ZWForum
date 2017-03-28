@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UpdateUserForm;
 use App\Repositories\UserRepository;
-use App\Transformers\Admin\UserListTransformer;
+use App\Transformers\UserFollowerTransformer;
+use App\Transformers\UserListTransformer;
 use App\Transformers\TopicListTransformer;
 use App\Transformers\ReplyListTransformer;
 use App\Transformers\UserTransformer;
@@ -82,8 +83,8 @@ class UserController extends ApiController
      */
     public function getUserFollower(Request $request, $id){
         $number = ($request->get('num'))? :20;
-        $topics = $this->user->getAllFollowers($id,$number);
-        return $this->respondWithCollection($topics,new UserListTransformer());
+        $users = $this->user->getAllFollowers($id,$number);
+        return $this->respondWithCollection($users,new UserFollowerTransformer());
     }
 
     /**
@@ -162,4 +163,7 @@ class UserController extends ApiController
         }
     }
 
+    public function isBanned(){
+        return $this->errorWrongArgs('对不起，你的账号已被管理员禁用！');
+    }
 }

@@ -21,7 +21,7 @@ class TopicTransformer extends BaseTransformer
             "id" => $model->id,
             "category_id" => $model->category_id,
             "title" => $model->title,
-            "body" => $model->body,
+            "content" => $model->content,
             "reply_count" => $model->reply_count,
             "vote_count" => $model->vote_count,
             "vote_up" => (bool)$model->vote_up,

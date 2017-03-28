@@ -11,6 +11,7 @@ use App\Transformers\ListTopicTransformer;
 use App\Transformers\TopicListTransformer;
 use App\Zwforum\Image\ImageUpload;
 use App\Zwforum\Markdown\Markdown;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

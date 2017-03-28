@@ -20,13 +20,14 @@ class ShowTopicTransformer extends BaseTransformer
         return [
             "id" => $model->id,
             "title" => $model->title,
+            "conetent" =>$model->content,
             "reply_count" => $model->reply_count,
             "vote_count" => $model->vote_count,
             "view_count" => $model->view_count,
             "time" => $model->created_at,
-            'links' => [
-                'details_topic' => route('api.topic.show', $model->id),
-            ],
+//            'links' => [
+//                'details_topic' => route('api.topic.show', $model->id),
+//            ],
         ];
     }
 
