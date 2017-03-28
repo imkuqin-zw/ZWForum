@@ -7,10 +7,7 @@
 @section('content')
     <div class="container main-container">
         @if (session('status'))
-            <div class="alert text-center alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>{{ session('status') }}</strong>
-            </div>
+            @include('user.components.userAlert')
         @endif
         @include('layout.error')
         <div class="col-md-3 user-show border-color">

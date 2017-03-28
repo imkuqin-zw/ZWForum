@@ -1,9 +1,13 @@
 <div class=" panel-body panel padding-sm user-basic-info">
     <div style="">
         <div class="media text-center">
+            @if(Auth::check() && Auth::id() == $user->id)
             <a href="{{route('user.editPortrait',$user->id)}}" data-toggle="tooltip" data-original-title="修改头像" title="修改头像">
                 <img class=" avatar-112 avatar img-thumbnail" src="{{asset('uploads/portraits').'/'}}{{($user->portrait_mid)?:'profile-pic_mid.png'}}">
             </a>
+            @else
+                <img class=" avatar-112 avatar img-thumbnail" src="{{asset('uploads/portraits').'/'}}{{($user->portrait_mid)?:'profile-pic_mid.png'}}">
+            @endif
             <div class="media-body" style="padding-top: 5px;">
                 <h3 class="media-heading">{{$user->name}}</h3>
                 <div class="item"> {{$user->real_name}}</div>

@@ -140,7 +140,7 @@
 
                             </div>
                             <div class="desc">
-                                {!! preg_replace("/($query)/",'<span class="highlight" >$1</span>',str_limit(app(\App\Zwforum\Markdown\Markdown::class)->convertHtmlToMarkdown($topic->content),250)) !!}
+                                {!! preg_replace("/($query)/",'<span class="highlight" >$1</span>', htmlspecialchars(str_limit(app(\App\Zwforum\Markdown\Markdown::class)->convertHtmlToMarkdown($topic->content),250))) !!}
                             </div>
                             <hr>
                         </div>
