@@ -30,6 +30,7 @@ class ReplyNotificationRepository extends BaseRepository
      * @param $reply
      */
     public function addNotification($toUsers,$reply){
+        $inserts = [];
         foreach ($toUsers as $toUser) {
             $inserts[] =[
                 'from_id' => $reply->user_id,

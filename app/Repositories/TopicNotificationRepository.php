@@ -30,6 +30,7 @@ class TopicNotificationRepository extends BaseRepository
      * @param $topic
      */
     public function addNotification($toUsers,$topic){
+        $inserts = [];
         foreach ($toUsers as $toUser) {
             $inserts[] =[
                 'from_id' => $topic->user_id,

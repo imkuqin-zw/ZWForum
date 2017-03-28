@@ -60,10 +60,8 @@
                             </div>
                         </div>
                     @else
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="empty-block">没有任何数据~~</div>
-                            </div>
+                        <div class="panel-body">
+                            <div class="empty-block">没有任何数据~~</div>
                         </div>
                     @endif
                 </div>
