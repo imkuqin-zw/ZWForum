@@ -23,6 +23,18 @@ class UserController extends ApiController
     }
 
     /**
+     * 获取登录用户信息
+     *
+     * @return mixed
+     */
+    public function getLogUserBaseInfo(){
+        $user = Auth::user();
+        $user['topic_count'] = $this->user->getTopicCount($user->id);
+        $user['collection_count'] = $this->user->getCollectionCount($user->id);
+        return $this->respondWithItem($user,new UserTransformer());
+    }
+
+    /**
      * 获得用户基本信息
      *
      * @param $id
@@ -58,7 +70,7 @@ class UserController extends ApiController
     public function getUserReply(Request $request, $id){
         $number = ($request->get('num'))? :20;
         $topics = $this->user->getAllReplies($id,$number);
-        return $this->respondWithCollection($topics,new ReplyListTransformer());
+        return $this->respondWithPaginator($topics,new ReplyListTransformer());
     }
 
     /**
@@ -71,7 +83,7 @@ class UserController extends ApiController
     Public function getUserVote(Request $request, $id){
         $number = ($request->get('num'))? :20;
         $topics = $this->user->getAllVotes($id,$number);
-        return $this->respondWithCollection($topics,new TopicListTransformer());
+        return $this->respondWithPaginator($topics,new TopicListTransformer());
     }
 
     /**
@@ -84,7 +96,7 @@ class UserController extends ApiController
     public function getUserFollower(Request $request, $id){
         $number = ($request->get('num'))? :20;
         $users = $this->user->getAllFollowers($id,$number);
-        return $this->respondWithCollection($users,new UserFollowerTransformer());
+        return $this->respondWithPaginator($users,new UserFollowerTransformer());
     }
 
     /**
@@ -165,5 +177,22 @@ class UserController extends ApiController
 
     public function isBanned(){
         return $this->errorWrongArgs('对不起，你的账号已被管理员禁用！');
+    }
+
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $this->user->create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+
+        return $this->created();
     }
 }

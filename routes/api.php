@@ -39,7 +39,8 @@ Route::group(['namespace' => 'Api','as' => 'api.'], function () {
     Route::get('user/{id}/reply','UserController@getUserReply')->name('user.getUserReply');
     Route::get('user/{id}/vote','UserController@getUserVote')->name('user.getUserVote');
     Route::get('user/{id}/follower','UserController@getUserFollower')->name('user.getUserFollower');
-    Route::get('user/{id}','UserController@getBaseInfo')->name('user.getBaseInfo');
+    Route::get('user/{id}','UserController@getBaseInfo')->where('id', '[0-9]+')->name('user.getBaseInfo');
+    Route::post('register','UserController@register')->name('user.register');
 
     Route::get('cate/showlist','CategoryController@showList')->name('cate.showList');
     Route::get('tag/showlist','TagController@showList')->name('tag.showList');
@@ -60,9 +61,11 @@ Route::group(['middleware' => ['auth:api','api_banned_auth'],'namespace' => 'Api
         Route::delete('topic/{id}', 'TopicController@destroy')->name('destroy');
         Route::get('tag/editlist','TagController@editList')->name('tag.editList');
         Route::get('cate/editlist','CategoryController@editList')->name('cate.editList');
-
+        Route::get('user/selfbaseinfo','UserController@getLogUserBaseInfo')->name('user.getLogUserBaseInfo');
         Route::put('user/{id}/portrait','UserController@updatePortrait')->name('user.updatePortrait');
         Route::put('user/{id}/password','UserController@updatePassword')->name('user.updatePassword');
+
+
         Route::put('user/{id}','UserController@update')->name('user.update');
 
         Route::post('reply','ReplyController@store')->name('reply.create');

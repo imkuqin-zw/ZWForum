@@ -23,6 +23,7 @@ class UserTransformer extends BaseTransformer
             'description' => $model->description,
             'topic_count' => $model->topic_count,
             'collection_count' => $model->collection_count,
+            'fans_count' => $model->follower_count,
             'reply_count' => $model->reply_count,
             //'is_banned' => $model->is_banned,
             //'is_admin' => $model->is_admin,
@@ -34,6 +35,10 @@ class UserTransformer extends BaseTransformer
             'weibo_link' => $model->weibo_link,
             'twitter_account' => $model->twitter_account,
             'personal_website' => $model->personal_website,
+            'link' =>[
+                //'follower' => route()
+            ]
+
         ];
     }
 }

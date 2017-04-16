@@ -15,4 +15,5 @@ class Category extends Model
         'name', 'description', 'parent_id','is_blocked','is_display','topic_count','order'
     ];
 
+
 }
